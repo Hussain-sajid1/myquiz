@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan History Quiz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .quiz-container {
+            background: rgba(0,0,0,0.7);
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        #start-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto 0 auto;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            background: #21d4fd;
+            background: linear-gradient(90deg, #21d4fd 0%, #b721ff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        #start-btn:hover {
+            background: #b721ff;
+        }
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 0.7rem;
+        }
+        button#next-btn {
+            background: #21d4fd;
+            background: linear-gradient(90deg, #21d4fd 0%, #b721ff 100%);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+        button#next-btn:hover {
+            background: #b721ff;
+        }
+        .result {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .answers-list {
+            margin-top: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .answers-list li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Pakistan History Quiz</h1>
+        <button id="start-btn">Start Quiz</button>
+        <div id="loading" style="display:none;text-align:center;margin:1rem 0;">Loading questions...</div>
+        <div id="quiz-content" style="display:none;">
+            <div class="question" id="question"></div>
+            <ul class="options" id="options"></ul>
+            <button id="next-btn" style="display:none;">Next</button>
+        </div>
+        <div class="result" id="result" style="display:none;"></div>
+        <div id="error-message" style="display:none;color:#ffb3b3;text-align:center;margin-top:1rem;"></div>
+        <ul class="answers-list" id="answers-list" style="display:none;"></ul>
+    </div>
+    <script>
+        let questions = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        async function loadQuestions() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            try {
+                const res = await fetch('quiz_data.json');
+                if (!res.ok) throw new Error('File not found');
+                questions = await res.json();
+                document.getElementById('loading').style.display = 'none';
+                return true;
+            } catch (e) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('error-message').textContent =
+                  'Could not load quiz questions. If you are opening this file directly, please run a local server (e.g., with Python: python -m http.server) and open http://localhost:8000/quiz.html in your browser.';
+                return false;
+            }
+        }
+
+        function showQuestion() {
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('answers-list').style.display = 'none';
+            const q = questions[currentQuestion];
+            document.getElementById('question').textContent = `Q${currentQuestion+1}: ${q.question}`;
+            const optionsList = document.getElementById('options');
+            optionsList.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const li = document.createElement('li');
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'option';
+                input.value = idx;
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(' ' + opt));
+                li.appendChild(label);
+                optionsList.appendChild(li);
+            });
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('next-btn').textContent = currentQuestion === questions.length - 1 ? 'Finish' : 'Next';
+        }
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            const selected = document.querySelector('input[name="option"]:checked');
+            if (!selected) {
+                alert('Please select an option!');
+                return;
+            }
+            userAnswers.push(Number(selected.value));
+            if (questions[currentQuestion].answer === Number(selected.value)) {
+                score++;
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        });
+
+        function showResult() {
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').textContent = `You scored ${score} out of ${questions.length}!`;
+            const answersList = document.getElementById('answers-list');
+            answersList.innerHTML = '';
+            questions.forEach((q, idx) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>Q${idx+1}:</strong> ${q.question}<br>Correct Answer: <em>${q.options[q.answer]}</em><br>Your Answer: <em>${q.options[userAnswers[idx]] || 'No answer'}</em>`;
+                answersList.appendChild(li);
+            });
+            answersList.style.display = 'block';
+        }
+
+        document.getElementById('start-btn').addEventListener('click', async () => {
+            const loaded = await loadQuestions();
+            if (!loaded) return;
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('quiz-content').style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            showQuestion();
+        });
+    </script>
+</body>
+</html> 

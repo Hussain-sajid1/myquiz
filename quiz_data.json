@@ -1,0 +1,77 @@
+[
+  {
+    "question": "When did Pakistan become an independent country?",
+    "options": ["14th August 1947", "15th August 1947", "23rd March 1940", "26th January 1950"],
+    "answer": 0
+  },
+  {
+    "question": "Who was the founder of Pakistan?",
+    "options": ["Allama Iqbal", "Liaquat Ali Khan", "Quaid-e-Azam Muhammad Ali Jinnah", "Sir Syed Ahmed Khan"],
+    "answer": 2
+  },
+  {
+    "question": "What was the name of the movement that led to the creation of Pakistan?",
+    "options": ["Khilafat Movement", "Pakistan Movement", "Non-Cooperation Movement", "Quit India Movement"],
+    "answer": 1
+  },
+  {
+    "question": "Which city was declared the capital of Pakistan at the time of independence?",
+    "options": ["Islamabad", "Lahore", "Karachi", "Rawalpindi"],
+    "answer": 2
+  },
+  {
+    "question": "Who was the first Prime Minister of Pakistan?",
+    "options": ["Liaquat Ali Khan", "Khawaja Nazimuddin", "Ghulam Muhammad", "Ayub Khan"],
+    "answer": 0
+  },
+  {
+    "question": "Which river is known as the lifeline of Pakistan?",
+    "options": ["Indus", "Jhelum", "Ravi", "Chenab"],
+    "answer": 0
+  },
+  {
+    "question": "When was the first constitution of Pakistan enforced?",
+    "options": ["1947", "1956", "1962", "1973"],
+    "answer": 1
+  },
+  {
+    "question": "Who presented the Pakistan Resolution in 1940?",
+    "options": ["Liaquat Ali Khan", "Chaudhry Rehmat Ali", "A.K. Fazlul Huq", "Allama Iqbal"],
+    "answer": 2
+  },
+  {
+    "question": "Which language was declared the national language of Pakistan at independence?",
+    "options": ["Punjabi", "Urdu", "Sindhi", "Bengali"],
+    "answer": 1
+  },
+  {
+    "question": "Who was the first Governor-General of Pakistan?",
+    "options": ["Liaquat Ali Khan", "Quaid-e-Azam Muhammad Ali Jinnah", "Iskander Mirza", "Ayub Khan"],
+    "answer": 1
+  },
+  {
+    "question": "Which country was the first to recognize Pakistan?",
+    "options": ["Iran", "Turkey", "Saudi Arabia", "Afghanistan"],
+    "answer": 0
+  },
+  {
+    "question": "When did East Pakistan become Bangladesh?",
+    "options": ["1965", "1971", "1973", "1980"],
+    "answer": 1
+  },
+  {
+    "question": "Who is known as the Poet of the East?",
+    "options": ["Allama Iqbal", "Faiz Ahmed Faiz", "Mirza Ghalib", "Sir Syed Ahmed Khan"],
+    "answer": 0
+  },
+  {
+    "question": "Which mountain range is located in the north of Pakistan?",
+    "options": ["Himalayas", "Karakoram", "Hindu Kush", "All of these"],
+    "answer": 3
+  },
+  {
+    "question": "What is the national flower of Pakistan?",
+    "options": ["Rose", "Jasmine", "Sunflower", "Tulip"],
+    "answer": 1
+  }
+] 
